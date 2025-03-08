@@ -21,8 +21,66 @@ To implement univariate Linear Regression to fit a straight line using least squ
 /*
 Program to implement univariate Linear Regression to fit a straight line using least squares.
 Developed by: 
-RegisterNumber:  
+RegisterNumber:
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+def calculate_linear_regression(X_str, Y_str):
+    
+    try:
+        X = np.array(list(map(float, X_str.split(','))))
+        Y = np.array(list(map(float, Y_str.split(','))))
+
+        # Calculate means
+        X_mean = np.mean(X)
+        Y_mean = np.mean(Y)
+
+        # Calculate slope (m)
+        numerator = np.sum((X - X_mean) * (Y - Y_mean))
+        denominator = np.sum((X - X_mean) ** 2)
+        m = numerator / denominator
+
+        # Calculate y-intercept (b)
+        b = Y_mean - m * X_mean
+
+        # Equation of the line
+        print(f"Y = {m:.2f}X + {b:.2f}")
+
+        # Plot scatterplot and line of best fit
+        plt.scatter(X, Y)
+        plt.plot(X, m * X + b, color='red')
+        plt.xlabel("X")
+        plt.ylabel("Y")
+        plt.title("Linear Regression")
+        plt.grid(True)
+        plt.show()
+
+        # Calculate errors
+        predicted_Y = m * X + b
+        errors = Y - predicted_Y
+
+        # Sort errors
+        sorted_errors = np.sort(errors)
+        return sorted_errors
+
+    except ValueError:
+        print("Invalid input format. Please enter comma-separated numbers.")
+        return None
+    except ZeroDivisionError:
+        print("Cannot calculate linear regression when the variance of X is zero.")
+        return None
+
+# Get input from the user
+X_input = input("Enter X values (comma-separated): ")
+Y_input = input("Enter Y values (comma-separated): ")
+
+sorted_errors = calculate_linear_regression(X_input, Y_input)
+
+if sorted_errors is not None:
+    print("Sorted Errors:", sorted_errors)
 */
+
 ```
 
 ## Output:
